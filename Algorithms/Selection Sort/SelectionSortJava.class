@@ -1,0 +1,38 @@
+public class SelectionSortJava {
+    public static void main(String[] args) {
+        int[] array = {54, 73, 23, 21};
+
+        /* ALGORITHM START */
+
+        // Loop through the array starting at the
+        // first index and ending at the second to last
+
+        for(int i = 0; i < array.length - 1; ++i) {
+            // Set the index with the smallest value to
+            // our current i value
+            int smallestIndex = i;
+
+            // Now we can compare our smallestIndex (i)
+            // with every other element in the array.
+            // We start with the value next to i which
+            // is i + 1
+            for(int j = i + 1; j < array.length; ++j) {
+                if (array[j] < array[smallestIndex]) {
+                    smallestIndex = j;
+                }
+            }
+
+            // Swap the elements i and smallestIndex are
+            // pointing to
+            int temp = array[i];
+            array[i] = array[smallestIndex];
+            array[smallestIndex] = temp;
+        }
+
+        /* ALGORITHM END */
+
+        for(int el: array) {
+            System.out.print("" + el + " ");
+        }
+    }
+}
