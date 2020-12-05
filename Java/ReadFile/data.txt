@@ -1,0 +1,3 @@
+Hey, my name is Jay!
+You are currently reading my article on file reading in Java.
+You're copying the contents of my text file
