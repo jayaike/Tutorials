@@ -1,7 +1,16 @@
-import 'package:customlogger/services/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:sqldatabase/database/database_helper.dart';
+import 'package:sqldatabase/database/todo_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  DatabaseProvider dbProvider = DatabaseProvider();
+
+  dbProvider.register(TodoHelper.onCreate);
+
+  await dbProvider.open();
+
   runApp(MyApp());
 }
 
@@ -30,12 +39,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _clickButton() {
-    ApplicationLogger.getLogger("FAB").d("This is a debug message");
-    ApplicationLogger.getLogger("FAB").v("This is a verbose message");
-    ApplicationLogger.getLogger("FAB").w("This is a warning message");
-    ApplicationLogger.getLogger("FAB").e("This is an error message");
-    ApplicationLogger.getLogger("FAB").wtf("This is a fatal error message");
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
   }
 
   @override
@@ -47,13 +56,22 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Text("Flutter Logging Tutorial")],
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.cake),
-        onPressed: _clickButton,
-      ),
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
