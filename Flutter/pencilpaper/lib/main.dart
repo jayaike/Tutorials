@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: SingleChildScrollView(
           padding: EdgeInsets.only(top: 50.0),
-          child: PencilPaper(
+          child: PaperField(
             initialText: "Hey, I am a paper field"
           )
         ),

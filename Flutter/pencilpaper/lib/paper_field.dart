@@ -9,18 +9,18 @@ double _kLineHeight = _kFontSize * _kHeight;
 double _kInitialHeight = _kLineHeight * 5;
 
 
-class PencilPaper extends StatefulWidget {
+class PaperField extends StatefulWidget {
   final String initialText;
 
-  PencilPaper({this.initialText});
+  PaperField({this.initialText});
 
   @override
   State<StatefulWidget> createState() {
-    return _PencilPaperState();
+    return _PaperFieldState();
   }
 }
 
-class _PencilPaperState extends State<PencilPaper> {
+class _PaperFieldState extends State<PaperField> {
   GlobalKey _textFieldKey;
   TextEditingController _controller;
   double lastKnownHeight = _kInitialHeight;
