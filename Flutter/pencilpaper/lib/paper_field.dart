@@ -1,9 +1,11 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
-double _kFontSize = 10.0;
+double _kFontSize = 32.0;
 double _kHeight = 2.0;
 double _kLineHeight = _kFontSize * _kHeight;
 double _kInitialHeight = _kLineHeight * 5;
@@ -31,6 +33,8 @@ class _PaperFieldState extends State<PaperField> {
     _textFieldKey = GlobalKey();
     _controller = new TextEditingController();
     _controller.text = widget.initialText;
+
+    _resetCaret(_controller.text);
   
     // Wait for all widgets to be drawn before 
     WidgetsBinding.instance.addPostFrameCallback((_) => _setLastKnownHeight());
@@ -49,6 +53,13 @@ class _PaperFieldState extends State<PaperField> {
           lastKnownHeight = size.height;
         });
       });
+    }
+  }
+
+  void _resetCaret(String val) {
+    if(val.isEmpty) {
+      _controller.text = " ";
+      _controller.selection = TextSelection.fromPosition(TextPosition(offset: 0));
     }
   }
 
@@ -89,6 +100,7 @@ class _PaperFieldState extends State<PaperField> {
                   minHeight: _kInitialHeight,
                 ),
                 child: Container(
+                  // color: Colors.amber,
                   child: NotificationListener<SizeChangedLayoutNotification>(
                     onNotification: (SizeChangedLayoutNotification notification) {
                       // Set the new TextField height whenever it changes
@@ -99,9 +111,10 @@ class _PaperFieldState extends State<PaperField> {
                       child: TextField(
                         key: _textFieldKey,
                         controller: _controller,
-                        cursorHeight: _kLineHeight * 0.6,
+                        cursorHeight: _kLineHeight * 0.65,
                         cursorWidth: 4,
                         maxLines: null,
+                        onChanged: _resetCaret,
                         decoration: _inputDecoration(),
                         keyboardType: TextInputType.multiline,
                         style: TextStyle(
