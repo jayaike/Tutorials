@@ -62,7 +62,6 @@ class _PaperFieldState extends State<PaperField> {
         nLines,
         (index) => Container(
           decoration: BoxDecoration(
-            color: Colors.grey,
             border: Border(
               bottom: BorderSide(
                   color: Colors.grey[400]
