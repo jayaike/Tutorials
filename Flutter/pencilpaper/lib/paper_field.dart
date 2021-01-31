@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 
-double _kFontSize = 32.0;
+double _kFontSize = 18.0;
 double _kHeight = 2.0;
 double _kLineHeight = _kFontSize * _kHeight;
 double _kInitialHeight = _kLineHeight * 5;
@@ -99,7 +99,7 @@ class _PaperFieldState extends State<PaperField> {
                       child: TextField(
                         key: _textFieldKey,
                         controller: _controller,
-                        cursorHeight: 48,
+                        cursorHeight: _kLineHeight * 0.6,
                         cursorWidth: 4,
                         maxLines: null,
                         decoration: _inputDecoration(),
