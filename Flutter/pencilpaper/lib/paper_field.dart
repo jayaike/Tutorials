@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 
-double _kFontSize = 18.0;
+double _kFontSize = 10.0;
 double _kHeight = 2.0;
 double _kLineHeight = _kFontSize * _kHeight;
 double _kInitialHeight = _kLineHeight * 5;
@@ -62,6 +62,7 @@ class _PaperFieldState extends State<PaperField> {
         nLines,
         (index) => Container(
           decoration: BoxDecoration(
+            color: Colors.grey,
             border: Border(
               bottom: BorderSide(
                   color: Colors.grey[400]
@@ -125,6 +126,7 @@ class _PaperFieldState extends State<PaperField> {
   // unwanted dimensions. VERY IMPORTANT!
   InputDecoration _inputDecoration() {
     return InputDecoration(
+      isDense: true,
       contentPadding: EdgeInsets.zero,
       border: InputBorder.none,
       enabledBorder: InputBorder.none,
