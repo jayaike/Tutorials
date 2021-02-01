@@ -1,8 +1,37 @@
 import 'dart:ui';
 
 import 'package:drawzo/state/points_state.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+
+class OnlyOnePointerRecognizer extends OneSequenceGestureRecognizer {
+  int _p = 0;
+  @override
+  void addPointer(PointerDownEvent event) {
+    startTrackingPointer(event.pointer);
+    if (_p == 0) {
+      resolve(GestureDisposition.rejected);
+      _p = event.pointer;
+    } else {
+      resolve(GestureDisposition.accepted);
+    }
+  }
+
+  @override
+  String get debugDescription => 'only one pointer recognizer';
+
+  @override
+  void didStopTrackingLastPointer(int pointer) {}
+
+  @override
+  void handleEvent(PointerEvent event) {
+    if (!event.down && event.pointer == _p) {
+      _p = 0;
+    }
+  }
+}
 
 
 class CurrentPathPaint extends StatelessWidget {
@@ -27,20 +56,31 @@ class CurrentPathPaint extends StatelessWidget {
           child
         ],
       ),
-      child: GestureDetector(
-        onPanStart: (details) {
-          currentPointsState.addPoint(details.localPosition);
-
-          // Added it twice so that if the user draws just a single dot, it can register
-
-          currentPointsState.addPoint(details.localPosition);
+      child: RawGestureDetector(
+        gestures: <Type, GestureRecognizerFactory>{
+          OnlyOnePointerRecognizer: GestureRecognizerFactoryWithHandlers<OnlyOnePointerRecognizer>(
+                () => OnlyOnePointerRecognizer(),
+                (OnlyOnePointerRecognizer instance) {
+                },
+          ),
         },
-        onPanUpdate: (details) => currentPointsState.addPoint(details.localPosition),
-        onPanEnd: (details) {
-          mainPointsState.addPath(currentPointsState.points);
-          currentPointsState.resetPoints();
-        }
-      ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onPanStart: (details) {
+            currentPointsState.addPoint(details.localPosition);
+
+            // Added it twice so that if the user draws just a single dot, it can register
+
+            currentPointsState.addPoint(details.localPosition);
+          },
+          onPanUpdate: (details) => currentPointsState.addPoint(details.localPosition),
+          onPanEnd: (details) {
+            mainPointsState.addPath(currentPointsState.points);
+            currentPointsState.resetPoints();
+          },
+        ),
+      )
+
     );
   }
 }

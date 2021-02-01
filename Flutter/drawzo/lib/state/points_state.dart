@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 
 
@@ -32,6 +33,7 @@ class CurrentPathState with ChangeNotifier {
 
   addPoint(Offset point) {
     // Add the current path
+
     _points.add(point);
 
     // Trigger a rebuild on the widget drawing the
@@ -42,6 +44,7 @@ class CurrentPathState with ChangeNotifier {
   resetPoints() {
     // Reset the state so it starts as an empty path
     // the next time the user draws
+
     _points = List();
     notifyListeners();
   }
